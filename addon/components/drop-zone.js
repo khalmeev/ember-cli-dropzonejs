@@ -188,32 +188,45 @@ export default Ember.Component.extend({
     Dropzone.autoDiscover = false;
     this.createDropzone(this.element);
 
-    didInsertElement(){    
+    didInsertElement(){
     this.getDropzoneOptions();
     Dropzone.autoDiscover = false;
-    this.createDropzone(this.element);    
+    this.createDropzone(this.element);
     this.setEvents();
     return this.myDropzone;
   },
-  
+
   changeFiles: function(){
     if (this.myDropzone.files.length > 0) {
       this.myDropzone.removeAllFiles(true);
       this.myDropzone.previewsContainer.innerHTML = "";
     }
-    var files = this.get('files'),
+    let files = this.get('files'),
       _this = this;
     if (files && files.length > 0) {
-      files.forEach(function(file){
+      this.files.map(function(file) {
         let dropfile = {
-          name: file,
+          name: file.get('name'),
+          type: file.get('type'),
+          size: file.get('size'),
           status: Dropzone.ADDED,
         };
+        let thumbnail = file.get('thumbnail');
+
+        if (typeof (thumbnail) === 'string') {
+          dropfile.thumbnail = thumbnail;
+        }
+
         _this.myDropzone.emit('addedfile', dropfile);
-        _this.myDropzone.emit('thumbnail', dropfile, file)
+
+        if (typeof (thumbnail) === 'string') {
+
+          _this.myDropzone.emit('thumbnail', dropfile, thumbnail);
+        }
+
         _this.myDropzone.emit('complete', dropfile);
         _this.myDropzone.files.push(file);
-      })
+      });
     }
   }.observes('files')
 });
