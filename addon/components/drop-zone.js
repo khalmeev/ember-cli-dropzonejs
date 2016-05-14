@@ -188,7 +188,7 @@ export default Ember.Component.extend({
     this.createDropzone(this.element);
     this.setEvents();
     return this.myDropzone;
-  },
+  }),
 
   changeFiles: function(){
     if (this.myDropzone.files.length > 0) {
