@@ -183,12 +183,6 @@ export default Ember.Component.extend({
   },
 
   insertDropzone: Ember.on('didInsertElement', function() {
-    let _this = this;
-    this.getDropzoneOptions();
-    Dropzone.autoDiscover = false;
-    this.createDropzone(this.element);
-
-    didInsertElement(){
     this.getDropzoneOptions();
     Dropzone.autoDiscover = false;
     this.createDropzone(this.element);
