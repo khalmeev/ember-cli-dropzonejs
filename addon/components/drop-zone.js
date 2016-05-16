@@ -197,6 +197,9 @@ export default Ember.Component.extend({
     }
     let files = this.get('files'),
       _this = this;
+    if(this.get('url') != this.myDropzone.options.url){
+      this.myDropzone.options.url = this.get('url');
+    }
     if (files && files.length > 0) {
       files.map(function(file) {
         file = new Ember.Object(file);
@@ -206,7 +209,7 @@ export default Ember.Component.extend({
           size: file.get('size'),
           thumbnail: file.get('thumbnail'),
           status: Dropzone.ADDED,
-        };                        
+        };
         _this.myDropzone.emit('addedfile', dropfile);
         let thumbnail = file.get('thumbnail');
         if (typeof (thumbnail) === 'string') {
