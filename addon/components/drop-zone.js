@@ -192,7 +192,7 @@ export default Ember.Component.extend({
 
   changeFiles: function(){
     if (this.myDropzone.files.length > 0) {
-      this.myDropzone.removeAllFiles(true);
+      this.myDropzone.files=[];
       this.myDropzone.previewsContainer.innerHTML = "";
     }
     let files = this.get('files'),
